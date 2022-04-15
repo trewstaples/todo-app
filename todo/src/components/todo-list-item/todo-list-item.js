@@ -6,21 +6,13 @@ const TodoListItem = ({ label }) => {
   const [done, setDone] = useState(false);
   const [important, setImportant] = useState(false);
 
-  const onLabelClick = () => {
-    setDone(!done);
-  };
-
-  const onMarkImportant = () => {
-    setImportant(!important);
-  };
-
   return (
     <span className={`todo-list-item ${done && 'done'} ${important && 'important'}`}>
-      <span className="todo-list-item-label" onClick={onLabelClick}>
+      <span className="todo-list-item-label" onClick={() => setDone(!done)}>
         {label}
       </span>
 
-      <button type="button" className="btn btn-outline-success btn-sm float-right" onClick={onMarkImportant}>
+      <button type="button" className="btn btn-outline-success btn-sm float-right" onClick={() => setImportant(!important)}>
         <i className="fa fa-exclamation" />
       </button>
 
