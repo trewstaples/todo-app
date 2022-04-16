@@ -1,22 +1,27 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import './todo-list-item.css';
 
-const TodoListItem = ({ label, onDelete }) => {
-  const [done, setDone] = useState(false);
-  const [important, setImportant] = useState(false);
-
+const TodoListItem = ({ label, onDelete, onToggleImportant, onToggleDone, important, done }) => {
   return (
     <span className={`todo-list-item ${done && 'done'} ${important && 'important'}`}>
-      <span className="todo-list-item-label" onClick={() => setDone(!done)}>
+      <span className="todo-list-item-label" onClick={onToggleDone}>
         {label}
       </span>
 
-      <button type="button" className="btn btn-outline-success btn-sm float-right" onClick={() => setImportant(!important)}>
+      <button
+        type="button"
+        className="btn btn-outline-success btn-sm float-right"
+        onClick={onToggleImportant}
+      >
         <i className="fa fa-exclamation" />
       </button>
 
-      <button type="button" className="btn btn-outline-danger btn-sm float-right" onClick={onDelete}>
+      <button
+        type="button"
+        className="btn btn-outline-danger btn-sm float-right"
+        onClick={onDelete}
+      >
         <i className="fa fa-trash-o" />
       </button>
     </span>
