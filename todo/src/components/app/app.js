@@ -2,22 +2,25 @@ import React, { useState } from 'react';
 
 import './app.css';
 
+import { uniqueId } from '../../utils';
 import AppHeader from '../app-header/app-header';
 import SearchPanel from '../search-panel/search-panel';
 import TodoList from '../todo-list/todo-list';
 import ItemStatusFilter from '../item-status-filter/item-status-filter';
 import ItemAddForm from '../item-add-form/item-add-form';
 
-const MAX_ID = 100;
-
 const App = () => {
-  const [maxId, setMaxId] = useState(MAX_ID);
+  const createTodoItem = (label) => {
+    return { label: label, important: false, done: false, id: uniqueId() };
+  };
 
-  const [todoData, setTodoData] = useState([
-    { label: 'Drink Coffee', important: false, id: 1 },
-    { label: ' Make Awesome App', important: true, id: 2 },
-    { label: 'Have a Lunch', important: false, id: 3 },
-  ]);
+  const items = [
+    createTodoItem('Drink Coffee'),
+    createTodoItem('Make Awesome App'),
+    createTodoItem('Have a Lunch'),
+  ];
+
+  const [todoData, setTodoData] = useState(items);
 
   const onDelete = (id) => {
     const index = todoData.findIndex((item) => item.id === id);
@@ -25,8 +28,7 @@ const App = () => {
   };
 
   const onItemAdded = (text) => {
-    setMaxId(maxId + 1);
-    const newItem = { label: text, important: false, id: maxId };
+    const newItem = createTodoItem(text);
 
     setTodoData([...todoData, newItem]);
   };
