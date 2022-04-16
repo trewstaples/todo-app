@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import './todo-list-item.css';
 
-const TodoListItem = ({ label }) => {
+const TodoListItem = ({ label, onDelete }) => {
   const [done, setDone] = useState(false);
   const [important, setImportant] = useState(false);
 
@@ -16,7 +16,7 @@ const TodoListItem = ({ label }) => {
         <i className="fa fa-exclamation" />
       </button>
 
-      <button type="button" className="btn btn-outline-danger btn-sm float-right">
+      <button type="button" className="btn btn-outline-danger btn-sm float-right" onClick={onDelete}>
         <i className="fa fa-trash-o" />
       </button>
     </span>
