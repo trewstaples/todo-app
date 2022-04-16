@@ -12,6 +12,7 @@ import ItemAddForm from '../item-add-form/item-add-form';
 const App = () => {
   const [todoData, setTodoData] = useState(todoItems);
   const [term, setTerm] = useState('');
+  const [activeFilter, setActiveFilter] = useState('All');
 
   const onDelete = (id) => {
     const index = todoData.findIndex((item) => item.id === id);
@@ -55,30 +56,33 @@ const App = () => {
     setTerm(term);
   };
 
-  const onFilterChange = (activeFilter) => {
-    console.log(activeFilter);
-    switch (activeFilter) {
+  const filter = (items, filter) => {
+    switch (filter) {
+      case 'All':
+        return items;
       case 'Active':
-        setTodoData(todoData.filter((item) => !item.done));
-        break;
+        return items.filter((item) => !item.done);
       case 'Done':
-        setTodoData(todoData.filter((item) => item.done));
-        break;
+        return items.filter((item) => item.done);
       default:
-        setTodoData(todoItems);
+        return items;
     }
+  };
+
+  const onFilterChange = (filter) => {
+    setActiveFilter(filter);
   };
 
   const doneCount = todoData.filter((item) => item.done).length;
   const todoCount = todoData.length - doneCount;
-  const visibleItems = search(todoData, term);
+  const visibleItems = filter(search(todoData, term), activeFilter);
 
   return (
     <div className="todo-app">
       <AppHeader toDo={todoCount} done={doneCount} />
       <div className="top-panel d-flex">
         <SearchPanel onSearchChange={onSearchChange} />
-        <ItemStatusFilter onFilterChange={onFilterChange} />
+        <ItemStatusFilter activeFilter={activeFilter} onFilterChange={onFilterChange} />
       </div>
 
       <TodoList
@@ -93,6 +97,3 @@ const App = () => {
 };
 
 export default App;
-
-//Настроить поиск по приложению
-//Настроить фильтр
