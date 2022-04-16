@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import './app.css';
 
-import { uniqueId } from '../../utils';
+import { createTodoItem, todoItems } from '../../utils';
 import AppHeader from '../app-header/app-header';
 import SearchPanel from '../search-panel/search-panel';
 import TodoList from '../todo-list/todo-list';
@@ -10,17 +10,7 @@ import ItemStatusFilter from '../item-status-filter/item-status-filter';
 import ItemAddForm from '../item-add-form/item-add-form';
 
 const App = () => {
-  const createTodoItem = (label) => {
-    return { label: label, important: false, done: false, id: uniqueId() };
-  };
-
-  const items = [
-    createTodoItem('Drink Coffee'),
-    createTodoItem('Make Awesome App'),
-    createTodoItem('Have a Lunch'),
-  ];
-
-  const [todoData, setTodoData] = useState(items);
+  const [todoData, setTodoData] = useState(todoItems);
 
   const onDelete = (id) => {
     const index = todoData.findIndex((item) => item.id === id);
@@ -33,12 +23,21 @@ const App = () => {
     setTodoData([...todoData, newItem]);
   };
 
+  const toggleProperty = (arr, id, propName) => {
+    const index = arr.findIndex((item) => item.id === id);
+
+    const oldItem = arr[index];
+    const newItem = { ...oldItem, [propName]: !oldItem[propName] };
+
+    return [...arr.slice(0, index), newItem, ...arr.slice(index + 1)];
+  };
+
   const onToggleImportant = (id) => {
-    console.log(`Toggle important ${id}`);
+    setTodoData(toggleProperty(todoData, id, 'important'));
   };
 
   const onToggleDone = (id) => {
-    console.log(`Toggle done ${id}`);
+    setTodoData(toggleProperty(todoData, id, 'done'));
   };
 
   return (

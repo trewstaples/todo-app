@@ -1,6 +1,6 @@
-let idCounter = 1;
+let idCounter = 100;
 
-export const uniqueId = () => {
+const uniqueId = () => {
   if (!idCounter) {
     idCounter = 1;
   }
@@ -9,3 +9,13 @@ export const uniqueId = () => {
 
   return `${id}`;
 };
+
+export const createTodoItem = (label) => {
+  return { label: label, important: false, done: false, id: uniqueId() };
+};
+
+export const todoItems = [
+  createTodoItem('Drink Coffee'),
+  createTodoItem('Make Awesome App'),
+  createTodoItem('Have a Lunch'),
+];
