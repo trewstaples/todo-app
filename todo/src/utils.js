@@ -1,4 +1,4 @@
-let idCounter = 100;
+let idCounter = 101;
 
 const uniqueId = () => {
   if (!idCounter) {
